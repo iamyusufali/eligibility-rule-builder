@@ -3,6 +3,7 @@ import { AddButton, RuleContainer, RuleDescription, RuleGroup, RuleHeader, RuleT
 import RuleRow from './RuleRow';
 import { ELIGIBILITY_RULES_OPTIONS, ELIGIBILITY_RULES_CONFIG } from '../config/eligibilityRules';
 import { EligibilityRule, RuleStateConfig, RuleOperator, RuleRelation } from '../config/types';
+import { RuleValueTag } from './RuleValueTags';
 
 const RuleBuilder = () => {
   const [rules, setRules] = useState<RuleStateConfig[]>([
@@ -14,6 +15,7 @@ const RuleBuilder = () => {
   ]);
 
   const isAllRulesAdded = rules.length === ELIGIBILITY_RULES_OPTIONS.length;
+  const existingRules = rules.map((rule) => rule.type);
 
   const handleAddRule = (relation: RuleRelation) => {
     // Find the next rule that isn't already added
@@ -79,15 +81,19 @@ const RuleBuilder = () => {
       </RuleHeader>
       <RuleGroup>
         {rules.map((rule, index) => (
-          <RuleRow
-            key={index}
-            rule={rule.type}
-            operator={rule.operator}
-            value={rule.value}
-            onDelete={rules.length === 1 ? undefined : () => handleDeleteRule(rule.type)}
-            onChange={(operator, value) => handleRuleChange(rule.type, { operator, value })}
-            onRuleTypeChange={(newRuleType) => handleRuleTypeChange(index, newRuleType)}
-          />
+          <div className="flex flex-col gap-1 mb-[10px]">
+            <RuleRow
+              key={index}
+              rule={rule.type}
+              operator={rule.operator}
+              value={rule.value}
+              onDelete={rules.length === 1 ? undefined : () => handleDeleteRule(rule.type)}
+              onChange={(operator, value) => handleRuleChange(rule.type, { operator, value })}
+              onRuleTypeChange={(newRuleType) => handleRuleTypeChange(index, newRuleType)}
+              existingRules={existingRules}
+            />
+            {Array.isArray(rule.value) ? <RuleValueTag value={(rule.value ?? []) as string[]} /> : null}
+          </div>
         ))}
         <div className="flex justify-center mt-4">
           <AddButton onClick={() => handleAddRule('AND')} disabled={isAllRulesAdded}>

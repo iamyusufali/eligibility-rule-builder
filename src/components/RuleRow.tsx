@@ -12,9 +12,10 @@ interface RuleRowProps {
   onDelete?: (rule: EligibilityRule) => void;
   onChange: (operator: RuleOperator | undefined, value: RuleValue) => void;
   onRuleTypeChange: (newRuleType: EligibilityRule) => void;
+  existingRules: EligibilityRule[];
 }
 
-const RuleRow = ({ rule, operator, value, onDelete, onChange, onRuleTypeChange }: RuleRowProps) => {
+const RuleRow = ({ rule, operator, value, onDelete, onChange, onRuleTypeChange, existingRules }: RuleRowProps) => {
   const handleRuleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newRuleType = e.target.value as EligibilityRule;
     onRuleTypeChange(newRuleType);
@@ -22,7 +23,7 @@ const RuleRow = ({ rule, operator, value, onDelete, onChange, onRuleTypeChange }
 
   return (
     <Row>
-      <RuleTypeComponent rule={rule} handleRuleTypeChange={handleRuleTypeChange} />
+      <RuleTypeComponent rule={rule} handleRuleTypeChange={handleRuleTypeChange} existingRules={existingRules} />
       <RuleOperatorComponent rule={rule} value={operator} onChange={(newOperator) => onChange(newOperator, value)} />
       <RuleValueComponent rule={rule} value={value} onChange={(newValue) => onChange(operator, newValue)} />
       {onDelete && <DeleteButton onClick={() => onDelete(rule)}>×</DeleteButton>}

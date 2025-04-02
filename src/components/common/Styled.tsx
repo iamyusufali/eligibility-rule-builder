@@ -36,7 +36,7 @@ export const Select = styled.select.attrs({
 `;
 
 export const Row = styled.div.attrs({
-  className: 'flex items-center gap-2 pl-[52px] relative mb-3 first:mb-5',
+  className: 'flex items-center gap-2 pl-[52px] mb-2',
 })``;
 
 export const SearchInputWrapper = styled.div.attrs({
@@ -105,7 +105,7 @@ export const CollectionText = styled.span.attrs({
   className: 'text-gray-800 text-sm',
 })``;
 
-export const SelectedTag = styled.div.attrs({
+export const Tag = styled.div.attrs({
   className: 'inline-flex items-center bg-gray-100 text-gray-800 text-xs px-2 py-0.5 rounded mr-1 mb-1',
 })`
   button {
