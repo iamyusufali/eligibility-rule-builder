@@ -125,7 +125,7 @@ export const ELIGIBILITY_RULES_CONFIG: Record<EligibilityRule, RuleRenderConfig>
     value: {
       inputType: 'range',
       min: 0,
-      max: 1000000,
+      max: 0,
     },
   },
 };

@@ -45,18 +45,18 @@ export const RuleValueComponent = ({ rule, value, onChange }: RuleValueProps) =>
         </Select>
       );
     case 'range':
-      const rangeValue = value as [number, number];
+      const rangeValue = (value ?? { min: 0, max: 0 }) as { min: number; max: number };
       return (
         <>
           <NumberInput
             type="number"
-            value={rangeValue?.[0] ?? 0}
-            onChange={(e) => handleChange([Number(e.target.value), rangeValue?.[1] ?? 0])}
+            value={rangeValue.min}
+            onChange={(e) => handleChange({ ...rangeValue, min: Number(e.target.value) })}
           />
           <NumberInput
             type="number"
-            value={rangeValue?.[1] ?? 0}
-            onChange={(e) => handleChange([rangeValue?.[0] ?? 0, Number(e.target.value)])}
+            value={rangeValue.max}
+            onChange={(e) => handleChange({ ...rangeValue, max: Number(e.target.value) })}
           />
         </>
       );

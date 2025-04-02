@@ -19,7 +19,7 @@ export type RuleOperator =
 export type RuleValue =
   | string // for select and text inputs
   | string[] // for multiselect inputs
-  | [number, number] // for range inputs
+  | { min: number; max: number } // for range inputs
   | null;
 
 export type RuleRelation = 'AND' | 'OR';
