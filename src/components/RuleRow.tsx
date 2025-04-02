@@ -1,27 +1,30 @@
 import React from 'react';
-import { EligibilityRule } from '../types';
-import { ELIGIBILITY_RULES_OPTIONS } from '../config/eligibilityRules';
-import { Row, Select, DeleteButton } from './common/Styled';
-import { RuleCondition } from './RuleCondition';
-import { RuleValue } from './RuleValue';
+import { EligibilityRule, RuleOperator, RuleValue } from '../config/types';
+import { Row, DeleteButton } from './common/Styled';
+import { RuleOperatorComponent } from './RuleOperator';
+import { RuleValueComponent } from './RuleValue';
+import { RuleTypeComponent } from './RuleType';
 
 interface RuleRowProps {
   rule: EligibilityRule;
+  operator?: RuleOperator;
+  value: RuleValue;
   onDelete?: (rule: EligibilityRule) => void;
+  onChange: (operator: RuleOperator | undefined, value: RuleValue) => void;
+  onRuleTypeChange: (newRuleType: EligibilityRule) => void;
 }
 
-const RuleRow: React.FC<RuleRowProps> = ({ rule, onDelete }) => {
+const RuleRow = ({ rule, operator, value, onDelete, onChange, onRuleTypeChange }: RuleRowProps) => {
+  const handleRuleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newRuleType = e.target.value as EligibilityRule;
+    onRuleTypeChange(newRuleType);
+  };
+
   return (
     <Row>
-      <Select value={rule}>
-        {ELIGIBILITY_RULES_OPTIONS.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </Select>
-      <RuleCondition rule={rule} />
-      <RuleValue rule={rule} />
+      <RuleTypeComponent rule={rule} handleRuleTypeChange={handleRuleTypeChange} />
+      <RuleOperatorComponent rule={rule} value={operator} onChange={(newOperator) => onChange(newOperator, value)} />
+      <RuleValueComponent rule={rule} value={value} onChange={(newValue) => onChange(operator, newValue)} />
       {onDelete && <DeleteButton onClick={() => onDelete(rule)}>×</DeleteButton>}
     </Row>
   );

@@ -1,13 +1,12 @@
-import { EligibilityRule, InputType, RuleCondition } from '../types';
+import { EligibilityRule, InputType, RuleOperator } from './types';
 
-export interface RuleConfig {
-  condition?: {
-    type: InputType;
-    options: { label: string; value: RuleCondition }[];
-    defaultValue?: RuleCondition;
+interface RuleRenderConfig {
+  operator?: {
+    options: { label: string; value: RuleOperator }[];
+    defaultValue?: RuleOperator;
   };
   value: {
-    type: InputType;
+    inputType: InputType;
     options?: { label: string; value: string }[];
     placeholder?: string;
     min?: number;
@@ -43,10 +42,9 @@ export const ELIGIBILITY_RULES_OPTIONS: { label: string; value: EligibilityRule 
   },
 ];
 
-export const ELIGIBILITY_RULES_CONFIG: Record<EligibilityRule, RuleConfig> = {
+export const ELIGIBILITY_RULES_CONFIG: Record<EligibilityRule, RuleRenderConfig> = {
   specific_collection: {
-    condition: {
-      type: 'select',
+    operator: {
       options: [
         { label: 'is not', value: 'is_not' },
         { label: 'contains any', value: 'contains_any' },
@@ -54,7 +52,7 @@ export const ELIGIBILITY_RULES_CONFIG: Record<EligibilityRule, RuleConfig> = {
       defaultValue: 'contains_any',
     },
     value: {
-      type: 'multiselect',
+      inputType: 'multiselect',
       placeholder: 'Select collections',
       options: [
         { label: 'Collection 1', value: 'collection_1' },
@@ -64,8 +62,7 @@ export const ELIGIBILITY_RULES_CONFIG: Record<EligibilityRule, RuleConfig> = {
     },
   },
   product_vendors: {
-    condition: {
-      type: 'select',
+    operator: {
       options: [
         { label: 'is not', value: 'is_not' },
         { label: 'contains any', value: 'contains_any' },
@@ -73,7 +70,7 @@ export const ELIGIBILITY_RULES_CONFIG: Record<EligibilityRule, RuleConfig> = {
       defaultValue: 'contains_any',
     },
     value: {
-      type: 'multiselect',
+      inputType: 'multiselect',
       placeholder: 'Search product vendors',
       options: [
         { label: 'Vendor 1', value: 'vendor_1' },
@@ -83,8 +80,7 @@ export const ELIGIBILITY_RULES_CONFIG: Record<EligibilityRule, RuleConfig> = {
     },
   },
   specific_product: {
-    condition: {
-      type: 'select',
+    operator: {
       options: [
         { label: 'equals anything', value: 'equals_anything' },
         { label: 'is not', value: 'is_not' },
@@ -93,7 +89,7 @@ export const ELIGIBILITY_RULES_CONFIG: Record<EligibilityRule, RuleConfig> = {
       defaultValue: 'equals_anything',
     },
     value: {
-      type: 'multiselect',
+      inputType: 'multiselect',
       placeholder: 'Search products',
       options: [
         { label: 'Product 1', value: 'product_1' },
@@ -104,7 +100,7 @@ export const ELIGIBILITY_RULES_CONFIG: Record<EligibilityRule, RuleConfig> = {
   },
   product_subscribed: {
     value: {
-      type: 'select',
+      inputType: 'select',
       options: [
         { label: 'Yes', value: 'yes' },
         { label: 'No', value: 'no' },
@@ -113,13 +109,12 @@ export const ELIGIBILITY_RULES_CONFIG: Record<EligibilityRule, RuleConfig> = {
   },
   specific_discount_codes: {
     value: {
-      type: 'text',
+      inputType: 'text',
       placeholder: 'Enter discount codes (comma separated)',
     },
   },
   cart_value_range: {
-    condition: {
-      type: 'select',
+    operator: {
       options: [
         { label: 'is between', value: 'is_between' },
         { label: 'is greater than', value: 'is_greater_than' },
@@ -128,7 +123,7 @@ export const ELIGIBILITY_RULES_CONFIG: Record<EligibilityRule, RuleConfig> = {
       defaultValue: 'is_between',
     },
     value: {
-      type: 'range',
+      inputType: 'range',
       min: 0,
       max: 1000000,
     },

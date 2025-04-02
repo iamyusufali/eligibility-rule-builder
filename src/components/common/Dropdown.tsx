@@ -15,17 +15,17 @@ import { SearchIcon } from './SearchIcon';
 interface DropdownProps {
   options: { label: string; value: string }[];
   placeholder?: string;
+  value: string[];
+  onChange: (value: string[]) => void;
 }
 
-export const Dropdown = ({ options, placeholder }: DropdownProps) => {
+export const Dropdown = ({ options, placeholder, value, onChange }: DropdownProps) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
-  const handleChange = (value: string) => {
-    setSelectedValues((prev) =>
-      prev.includes(value) ? prev.filter((prevValue) => prevValue !== value) : [...prev, value]
-    );
+  const handleChange = (optionValue: string) => {
+    const newValue = value.includes(optionValue) ? value.filter((v) => v !== optionValue) : [...value, optionValue];
+    onChange(newValue);
   };
 
   useEffect(() => {
@@ -50,17 +50,14 @@ export const Dropdown = ({ options, placeholder }: DropdownProps) => {
         </SearchIconWrapper>
         <SearchInput type="text" placeholder={placeholder ?? 'Select'} readOnly />
         <Counter>
-          {selectedValues.length}/{options.length}
+          {value.length}/{options.length}
         </Counter>
       </SearchInputWrapper>
       {isDropdownOpen && (
         <CollectionDropdownContent>
           {options.map((opt) => (
             <CollectionItem key={opt.value}>
-              <CollectionCheckbox
-                checked={selectedValues.includes(opt.value)}
-                onChange={() => handleChange(opt.value)}
-              />
+              <CollectionCheckbox checked={value.includes(opt.value)} onChange={() => handleChange(opt.value)} />
               <CollectionText>{opt.label}</CollectionText>
             </CollectionItem>
           ))}
