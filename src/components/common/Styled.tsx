@@ -36,7 +36,7 @@ export const Select = styled.select.attrs({
 `;
 
 export const Row = styled.div.attrs({
-  className: 'flex items-center gap-2 pl-[52px] mb-2',
+  className: 'relative flex items-center gap-2 pl-[52px] pr-[52px] mb-2',
 })``;
 
 export const SearchInputWrapper = styled.div.attrs({
@@ -62,7 +62,7 @@ export const Counter = styled.span.attrs({
 })``;
 
 export const DeleteButton = styled.button.attrs({
-  className: 'p-1 text-gray-400 hover:text-gray-500',
+  className: 'p-1 text-gray-400 hover:text-gray-500 ml-auto',
 })`
   font-size: 16px;
   line-height: 1;
@@ -73,7 +73,7 @@ export const AddButton = styled.button.attrs({
     'flex items-center justify-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 mt-4 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white',
 })``;
 
-export const NumberInput = styled.input.attrs({
+export const Input = styled.input.attrs({
   className:
     'px-3 py-1.5 bg-white text-gray-800 border border-gray-300 rounded-md focus:ring-1 focus:ring-gray-500 focus:border-gray-500 w-[100px] text-sm',
 })`

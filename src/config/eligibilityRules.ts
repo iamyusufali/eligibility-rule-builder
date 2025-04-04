@@ -1,6 +1,6 @@
 import { EligibilityRule, InputType, RuleOperator } from './types';
 
-interface RuleRenderConfig {
+export interface RuleRenderConfig {
   operator?: {
     options: { label: string; value: RuleOperator }[];
     defaultValue?: RuleOperator;
